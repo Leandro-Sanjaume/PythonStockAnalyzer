@@ -366,8 +366,13 @@ def fileHandler(action):
                 id,symbol,name,group,market_cap,stocks = line.split(',')
                 if(stocks != '[]'):
                     stocks = stocks.split('|')
+                    contador = 0
                     for s in stocks:
+                        s = s.replace(';',',')
                         s = s.split(',')
+                        s = list(map(lambda x:float(x),s))
+                        stocks[contador] = s
+                        contador += 1
                 else:
                     stocks = []
                 stockList[int(id)]={
@@ -396,7 +401,7 @@ def fileHandler(action):
             stockFile = open(fileName,"wt")
             for stock in stockList:
                 if(stockList[stock]['stocks']!= []):
-                    formattedStocks = '|'.join([','.join(map(str, row)) for row in stockList[stock]['stocks']])
+                    formattedStocks = '|'.join([';'.join(map(str, row)) for row in stockList[stock]['stocks']])
                 else:
                     formattedStocks = '[]'
                 stockFile.write(f"{str(stock)},{stockList[stock]['symbol']},{stockList[stock]['name']},{stockList[stock]['group']},{str(stockList[stock]['market_cap'])},{formattedStocks}\n")
