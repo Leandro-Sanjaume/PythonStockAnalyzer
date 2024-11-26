@@ -1,285 +1,177 @@
 import random
 import time
 
-stockList = {
-    246: {
-        "symbol": "AAPL",
-        "name": "Apple",
-        "group": "NASDAQ",
-        "market_cap": 2500000,  # 2.5 Million USD
-        "stocks": []
-    },
-    235: {
-        "symbol": "MSFT",
-        "name": "Microsoft",
-        "group": "NASDAQ",
-        "market_cap": 2100000,  # 2.1 Million USD
-        "stocks": []
-    },
-    301: {
-        "symbol": "YPF",
-        "name": "YPF S.A.",
-        "group": "BYMA",
-        "market_cap": 5000000000,  # 5 Billion USD
-        "stocks": []
-    },
-    310: {
-        "symbol": "GGAL",
-        "name": "Grupo Financiero Galicia S.A.",
-        "group": "BYMA",
-        "market_cap": 2500000000,  # 2.5 Billion USD
-        "stocks": []
-    },
-    303: {
-        "symbol": "MELI",
-        "name": "MercadoLibre Inc.",
-        "group": "MERVAL",
-        "market_cap": 40000000000,  # 40 Billion USD
-        "stocks": []
-    },
-    305: {
-        "symbol": "TS",
-        "name": "Tenaris S.A.",
-        "group": "NYSE",
-        "market_cap": 15000000000,  # 15 Billion USD
-        "stocks": []
-    },
-    308: {
-        "symbol": "PAMP",
-        "name": "Pampa Energía S.A.",
-        "group": "BYMA",
-        "market_cap": 1500000000,  # 1.5 Billion USD
-        "stocks": []
-    },
-    218: {
-        "symbol": "TM",
-        "name": "Toyota Motor Corporation",
-        "group": "Nikkei 225",
-        "market_cap": 300000000000,  # 300 Billion USD (aproximado)
-        "stocks": []
-    },
-    191: {
-        "symbol": "SONY",
-        "name": "Sony Group Corporation",
-        "group": "Nikkei 225",
-        "market_cap": 120000000000,  # 120 Billion USD (aproximado)
-        "stocks": []
-    },
-    266: {
-        "symbol": "KO",
-        "name": "The Coca-Cola Company",
-        "group": "Dow Jones",
-        "market_cap": 250000000000,  # 250 Billion USD (aproximado)
-        "stocks": []
-    },
-    217: {
-        "symbol": "NVDA",
-        "name": "NVIDIA Corporation",
-        "group": "NASDAQ",
-        "market_cap": 1100000000000,  # 1.1 Trillion USD (aproximado)
-        "stocks": []
-    },
-    278: {
-        "symbol": "STLA",
-        "name": "Stellantis N.V. (Dodge)",
-        "group": "NYSE",
-        "market_cap": 70000000000,  # 70 Billion USD (aproximado)
-        "stocks": []
-    },
-    331: {
-        "symbol": "GLOB",
-        "name": "Globant S.A.",
-        "group": "MERVAL",
-        "market_cap": 10000000000,  # 10 Billion USD (aproximado)
-        "stocks": []
-    },
-    329: {
-        "symbol": "BMA",
-        "name": "Banco Macro S.A.",
-        "group": "MERVAL",
-        "market_cap": 2500000000,  # 2.5 Billion USD (aproximado)
-        "stocks": []
-    },
-    319: {
-        "symbol": "TECO2",
-        "name": "Telecom Argentina S.A.",
-        "group": "MERVAL",
-        "market_cap": 1000000000,  # 1 Billion USD (aproximado)
-        "stocks": []
-    },
-    252: {
-        "symbol": "INTC",
-        "name": "Intel Corporation",
-        "group": "NASDAQ",
-        "market_cap": 200000000000,  # 200 Billion USD (aproximado)
-        "stocks": []
-    },
-    213: {
-        "symbol": "PEP",
-        "name": "PepsiCo, Inc.",
-        "group": "NASDAQ",
-        "market_cap": 250000000000,  # 250 Billion USD (aproximado)
-        "stocks": []
-    },
-    354: {
-        "symbol": "BHP",
-        "name": "BHP Group",
-        "group": "ASX",
-        "market_cap": 200000000000,  # 200 Billion USD (aproximado)
-        "stocks": []
-    },
-    335: {
-        "symbol": "NESN",
-        "name": "Nestlé S.A.",
-        "group": "SIX Swiss Exchange",
-        "market_cap": 350000000000,  # 350 Billion USD (aproximado)
-        "stocks": []
-    },
-    339: {
-        "symbol": "BABA",
-        "name": "Alibaba Group",
-        "group": "NYSE",
-        "market_cap": 400000000000,  # 400 Billion USD (aproximado)
-        "stocks": []
-    },
-    400: {
-        "symbol": "DOW",
-        "name": "Dow Jones Industrial Avg.",
-        "group": "Stock Index",
-        "market_cap": 15000000000,  
-        "stocks": []
-    },
-    401: {
-        "symbol": "SP500",
-        "name": "S&P 500",
-        "group": "Stock Index",
-        "market_cap": 52000000000,  
-        "stocks": []
-    },
-    403: {
-        "symbol": "FTSE",
-        "name": "FTSE 100",
-        "group": "Stock Index",
-        "market_cap": 2500000000,  
-        "stocks": []
-    },
-    404: {
-        "symbol": "NIKKEI",
-        "name": "Nikkei 225",
-        "group": "Stock Index",
-        "market_cap": 3200000000,  
-        "stocks": []
-    },
-}
-
+stockList = {}
 globalFactor = random.randint(95,105)/100
 
 def getWeekDays(totalDays):
-    currTime = time.localtime()
-    currentDay = currTime.tm_wday
-    weekDays = 0
-    while totalDays != 0:
-        if(currentDay != 0):
-            weekDays += 1
-            totalDays -= 1
-            currentDay -= 1
-        else:
-            totalDays -= 2
-            currentDay = 4
-    return weekDays
+    try:
+        assert totalDays > 0, "Los días deben ser mayores que 0"
+        currTime = time.localtime()
+        currentDay = currTime.tm_wday
+        weekDays = 0
+        while totalDays != 0:
+            if(currentDay != 0):
+                weekDays += 1
+                totalDays -= 1
+                currentDay -= 1
+            else:
+                totalDays -= 2
+                currentDay = 4
+    except TypeError:
+        print("Solo se permiten numeros enteros como días")
+        return 5 # Valor por Defecto
+        
+    except AssertionError as m:
+        print(f"Excepción levantada:{m}")
+        return 5 # Valor por Defecto
+    else:
+        return weekDays
 
 def inputPriceData(stockList,weekDaysTotal,stockId,selectedTime,returnMode):
-    mu = random.randint(100,250)
-    sigma = random.randint(10,30)
-    stockValues = stockList[stockId]["stocks"]
-    for day in range(0,weekDaysTotal,5):
-        stockValues.append([random.gauss(mu, sigma) * globalFactor for i in range(5)])
-    #print(random.gauss(mu, sigma)) 
-    performTechnicalAnalysis(selectedTime,stockId,returnMode)
-    
+    try:
+        if type(stockList) != dict:
+            raise TypeError("stockList no esta construido como se esperaba!")
+        mu = random.randint(100,250)
+        sigma = random.randint(10,30)
+        stockValues = stockList[stockId]["stocks"]
+        for day in range(0,weekDaysTotal,5):
+            stockValues.append([random.gauss(mu, sigma) * globalFactor for i in range(5)])
+
+        performTechnicalAnalysis(selectedTime,stockId,returnMode)
+        
+    except KeyError:
+        print("Se intento Acceder a un valor del stockList inexistente")
+    except TypeError as m:
+        print({m})
+    except Exception as e:
+        print(f"Se ha producido un error inesperado: {e}")
+        
 def calculateRsi(weeklyStockValues):
-    earnings = 0
-    losses = 0
-    for i in range(1, len(weeklyStockValues)):
-        change = weeklyStockValues[i] - weeklyStockValues[i-1]
-        if change > 0:
-            earnings += change
+    try:
+        assert len(weeklyStockValues) > 2, "Se requiere al menos 2 valores para calcular el RSI"
+        earnings = 0
+        losses = 0
+        for i in range(1, len(weeklyStockValues)):
+            change = weeklyStockValues[i] - weeklyStockValues[i-1]
+            if change > 0:
+                earnings += change
+            else:
+                losses += -change
+
+        averageEarnings = earnings/len(weeklyStockValues)
+        averageLosses = losses/len(weeklyStockValues)
+        if averageLosses != 0:
+            rs = averageEarnings/averageLosses
+            rsi = 100 - (100 / (1 + rs))
+            return rsi
         else:
-            losses += -change
-            
-    averageEarnings = earnings/len(weeklyStockValues)
-    averageLosses = losses/len(weeklyStockValues)
-    if averageLosses != 0:
-        rs = averageEarnings/averageLosses
-        rsi = 100 - (100 / (1 + rs))
-        return rsi
-    else:
-        return 100
+            return 100
+        
+    except AssertionError as m:
+        print(f"Excepción levantada:{m}")
+        return "No Data"
+    except ZeroDivisionError:
+        print("No se puede dividir por cero")
+        return "No Data"
+    except Exception as e:
+        print(f"Se ha producido un error inesperado: {e}")
+        return "No Data"
+
     
 def calculateMovingAverage(weeklyStockValues):
-    valuesSum = 0
-    for i in range(len(weeklyStockValues)):
-            valuesSum += weeklyStockValues[i]
-    return valuesSum/len(weeklyStockValues)
+    try:
+        valuesSum = 0
+        for i in range(len(weeklyStockValues)):
+                valuesSum += weeklyStockValues[i]
+        return valuesSum/len(weeklyStockValues)
 
+    except ZeroDivisionError:
+        print("No se puede dividir por cero")
+        return "No Data"
+    except Exception as e:
+        print(f"Se ha producido un error inesperado: {e}")
+        return "No Data"
 
 def calculateWeeklyReturn(weeklyStockValues):
-    openValue = weeklyStockValues[0]
-    closeValue = weeklyStockValues[len(weeklyStockValues)-1]
-    weeklyReturn = (closeValue - openValue) / openValue
-    return weeklyReturn
-        
+    try:
+        openValue = weeklyStockValues[0]
+        closeValue = weeklyStockValues[len(weeklyStockValues)-1]
+        weeklyReturn = (closeValue - openValue) / openValue
+        return weeklyReturn
+    
+    except IndexError:
+        print("Se intento acceder a un valor no existente de weeklyStockValues")
+        return "No Data"
+    except ZeroDivisionError:
+        print("No se puede dividir por cero")
+        return "No Data"
+    except Exception as e:
+        print(f"Se ha producido un error inesperado: {e}")
+        return "No Data"
         
 def stockInfoTable(stockValues,stockReturn,movingAverages,rsiList):
     print("\n")
     print(f"{'Fecha':<11}{'Apertura':<13}{'Cierre':<11}{'Precio Promedio':<19}{'RSI':<9}{'Rendimiento':<15}{'Vela':<9}")
     print("=" * 85)
-    
-    for week in range(len(stockValues)):
-        if stockReturn[week] > 0:
-            candle = '▲'  # Subida
-        elif stockReturn[week] < 0:
-            candle = '▼'  # Bajada
-        else:
-            candle = '━'  # Estable
-
-        print(f"Week {stockValues.index(stockValues[week])+1:<6}{stockValues[week][0]:<13.2f}{stockValues[week][len(stockValues[week])-1]:<12.2f}{movingAverages[week]:<18.2f}{rsiList[week]:<12.2f}{stockReturn[week]:<13.2f}{candle:<9}")
-       
         
+    for week in range(len(stockValues)):
+        try:
+            assert stockValues[week] is not None, "stockValues no tiene valor en una semana"
+            if stockReturn[week] > 0:
+                candle = '▲'  # Subida
+            elif stockReturn[week] < 0:
+                candle = '▼'  # Bajada
+            else:
+                candle = '━'  # Estable
+
+            print(f"Week {stockValues.index(stockValues[week])+1:<6}{stockValues[week][0]:<13.2f}{stockValues[week][len(stockValues[week])-1]:<12.2f}{movingAverages[week]:<18.2f}{rsiList[week]:<12.2f}{stockReturn[week]:<13.2f}{candle:<9}")
+        except AssertionError as value:
+            value = "No Data"
+            print(f"Week {value<6}{value:<13.2f}{value:<12.2f}{movingAverages[week]:<18.2f}{rsiList[week]:<12.2f}{stockReturn[week]:<13.2f}{candle:<9}")
+        except Exception as e:
+            print(f"Se ha producido un error inesperado: {e}")
+            return None
+
     print("\n\n")
     aux = input("Ingrese cualquier tecla para volver al buscador ")
-    findStock('single')
+    return
 
 def recommendedAction(stockReturn,movingAverages,rsiList):
+    try:
+        avrgReturn = sum(stockReturn) / len(stockReturn)
+        avrgMovingMedia = sum(movingAverages) / len(movingAverages)
+        avrgRsi = sum(rsiList) / len(rsiList)
     
-    avrgReturn = sum(stockReturn) / len(stockReturn)
-    avrgMovingMedia = sum(movingAverages) / len(movingAverages)
-    avrgRsi = sum(rsiList) / len(rsiList)
+        print(f"Considerando el valor promedio de ${avrgMovingMedia:<.2f}, se ha notado:")
+        if avrgReturn > 0:
+            print("Una tendencia alcista, lo que sugiere que el precio de la acción está aumentando en promedio.")
+        elif avrgReturn < 0:
+            print("Una tendencia bajista, lo que indica que el precio de la acción está disminuyendo en promedio.")
+        else:
+            print("El retorno promedio es cero, lo que sugiere que el precio de la acción se ha mantenido estable.")
+
+        if avrgMovingMedia > movingAverages[-1]:  
+            print("La media móvil está en aumento, indicando que los precios recientes son más altos que los anteriores.")
+        else:
+            print("La media móvil está en descenso, lo que indica que los precios recientes son más bajos que los anteriores.")
+
+        if avrgRsi > 70:
+            print("El RSI indica sobrecompra, lo que puede significar que el precio está inflado y podría corregirse.")
+        elif avrgRsi < 30:
+            print("El RSI indica sobreventa, sugiriendo que el precio podría aumentar en el futuro.")
+        else:
+            print("El RSI se encuentra en un rango normal, lo que sugiere que no hay condiciones extremas en el mercado.")
+
+    except ZeroDivisionError:
+        print("No se puede dividir por cero, abortando..") 
+    except Exception as e:
+        print(f"Se ha producido un error inesperado: {e}")
+    finally:
+        print("\n\n")
+        aux = input("Ingrese cualquier tecla para volver al buscador ")
+        return
     
-    print(f"Considerando el valor promedio de ${avrgMovingMedia:<.2f}, se ha notado:")
-    if avrgReturn > 0:
-        print("Una tendencia alcista, lo que sugiere que el precio de la acción está aumentando en promedio.")
-    elif avrgReturn < 0:
-        print("Una tendencia bajista, lo que indica que el precio de la acción está disminuyendo en promedio.")
-    else:
-        print("El retorno promedio es cero, lo que sugiere que el precio de la acción se ha mantenido estable.")
-
-    if avrgMovingMedia > movingAverages[-1]:  
-        print("La media móvil está en aumento, indicando que los precios recientes son más altos que los anteriores.")
-    else:
-        print("La media móvil está en descenso, lo que indica que los precios recientes son más bajos que los anteriores.")
-
-    if avrgRsi > 70:
-        print("El RSI indica sobrecompra, lo que puede significar que el precio está inflado y podría corregirse.")
-    elif avrgRsi < 30:
-        print("El RSI indica sobreventa, sugiriendo que el precio podría aumentar en el futuro.")
-    else:
-        print("El RSI se encuentra en un rango normal, lo que sugiere que no hay condiciones extremas en el mercado.")
-    print("\n")
-    aux = input("Ingrese cualquier tecla para volver al buscador ")
-    findStock('single')
-
-
 def performTechnicalAnalysis(selectedTime,stockId,returnMode):
     
     weekDays = getWeekDays(selectedTime)
@@ -290,9 +182,25 @@ def performTechnicalAnalysis(selectedTime,stockId,returnMode):
             movingAverages = []
             rsiList = []
             for week in range(len(stockValues)):
-                stockReturn.append(calculateWeeklyReturn(stockValues[week])) # Calculamos el porcentaje de perdida/ganancia de la semana
-                movingAverages.append(calculateMovingAverage(stockValues[week])) # Calculamos el valor promedio de la semana
-                rsiList.append(calculateRsi(stockValues[week])) # Calculamos el Indice de fuerza relativa
+                try:
+                    if type(stockValues[week]) != list:
+                            raise TypeError("stockValues[week] no es una lista de valores")
+                        
+                    if len(stockValues[week]) == 0:
+                        raise ValueError("stockValues[week] se encuentra vacio")
+                    stockReturn.append(calculateWeeklyReturn(stockValues[week])) # Calculamos el porcentaje de perdida/ganancia de la semana
+                    movingAverages.append(calculateMovingAverage(stockValues[week])) # Calculamos el valor promedio de la semana
+                    rsiList.append(calculateRsi(stockValues[week])) # Calculamos el Indice de fuerza relativa
+                    
+                except TypeError as m:
+                    print(m)
+                    return None
+                except ValueError as m:
+                    print(m)
+                except Exception as e:
+                    print(f"Se ha producido un error inesperado: {e}")
+                    return None
+                
             if returnMode == 'recomendation':
                 recommendedAction(stockReturn,movingAverages,rsiList)
             else:
@@ -306,37 +214,43 @@ def performTechnicalAnalysis(selectedTime,stockId,returnMode):
     
 
 def candlesVisualizer(stockValues):
+    try:
+        maxValue = max(list(map(lambda x: max(x),stockValues)))
+        minValue =  min(list(map(lambda x: min(x),stockValues)))
+        assert maxValue != minValue, "El valor máximo y mínimo son iguales, lo que no es válido para el gráfico"
+        chartHeight = 15 
+        valueRange = maxValue - minValue
+        step = valueRange / chartHeight
+
+        print("\n")
+        # Crear gráfico
+        for i in range(chartHeight, -1, -1):
+            linePrice = minValue + i * step
+            row = f"{linePrice:>7.2f} | "
+
+            stockValuesList = []
+            for week in stockValues:
+                for i in week:
+                    stockValuesList.append(i)
+
+            for value in stockValuesList:
+                if value >= linePrice:
+                    row += "|"  # Velas arriba del precio actual
+                else:
+                    row += " "  # Espacios vacíos
+            print(row)
+        
+        print("         " + "-" * len(stockValuesList))
+
+    except AssertionError as m:
+        print(m) 
+    except Exception as e:
+        print(f"Se ha producido un error inesperado: {e}")
+    finally:
+        print("\n\n")
+        aux = input("Ingrese cualquier tecla para volver al buscador ")
+        return
     
-    maxValue = max(list(map(lambda x: max(x),stockValues)))
-    minValue =  min(list(map(lambda x: min(x),stockValues)))
-
-    chartHeight = 15 
-    valueRange = maxValue - minValue
-    step = valueRange / chartHeight
-
-    print("\n")
-    # Crear gráfico
-    for i in range(chartHeight, -1, -1):
-        linePrice = minValue + i * step
-        row = f"{linePrice:>7.2f} | "
-        
-        stockValuesList = []
-        for week in stockValues:
-            for i in week:
-                stockValuesList.append(i)
-
-        for value in stockValuesList:
-            if value >= linePrice:
-                row += "|"  # Velas arriba del precio actual
-            else:
-                row += " "  # Espacios vacíos
-        print(row)
-        
-    print("         " + "-" * len(stockValuesList))
-    print("\n")
-    aux = input("Ingrese cualquier tecla para volver al buscador ")
-    findStock('single')
-
 def stockActions(stockId):
     print("Que operacion le gustaria hacer?\n1. Analisis Tecnico de los datos\n2. Visualizacion de su actividad\n3. Recomendacion de compra/venta")
     selectedOption = input()
@@ -440,9 +354,72 @@ def getStockIndexes(searchAmount):
             tableVisualizer(stockIndexes)
         else:
             print(f"No se han encontrado resultados con de Indices Bursatiles.")
+            
+def fileHandler(action):
+    fileName = 'stockData.csv'
+    if(action == 'open'):
+        fileState = "not_loaded"
+        try:
+            stockFile = open(fileName,"rt")
+            for line in stockFile:
+                line = line.strip()
+                id,symbol,name,group,market_cap,stocks = line.split(',')
+                if(stocks != '[]'):
+                    stocks = stocks.split('|')
+                    for s in stocks:
+                        s = s.split(',')
+                else:
+                    stocks = []
+                stockList[int(id)]={
+                   "symbol": symbol,
+                   "name": name,
+                   "group":group,
+                   "market_cap": int(market_cap),
+                   "stocks": stocks,
+                }
+            fileState = 'loaded'
+        except FileNotFoundError as m:
+            print(f"El archivo '{fileName}' no fue encontrado. Error:{m}")
+        except OSError as m:
+            print(f"El archivo '{fileName}' no se pudo leer. Error:{m}")
+        except Exception as e:
+            print(f"An error occurred: {e}")
+        finally:
+            try:
+                stockFile.close()
+            except NameError:
+                pass
+            finally:
+                return fileState
+    elif(action == 'close'):
+        try:
+            stockFile = open(fileName,"wt")
+            for stock in stockList:
+                if(stockList[stock]['stocks']!= []):
+                    formattedStocks = '|'.join([','.join(map(str, row)) for row in stockList[stock]['stocks']])
+                else:
+                    formattedStocks = '[]'
+                stockFile.write(f"{str(stock)},{stockList[stock]['symbol']},{stockList[stock]['name']},{stockList[stock]['group']},{str(stockList[stock]['market_cap'])},{formattedStocks}\n")
+        except OSError as m:
+            print(f"El archivo '{fileName}' no se pudo leer. Error:{m}")
+        except Exception as e:
+            print(f"An error occurred: {e}")
+        finally:
+            try:
+                stockFile.close()
+            except NameError:
+                pass
+
+def loadStocks():
+    result = fileHandler('open')
+    if result == 'not_loaded':
+        print("No se pudo cargar los datos-")
+    else:
+        return
 
 def findStock(mode):
-    
+    if len(stockList) == 0:
+        loadStocks()
     if mode == 'single':
         print("Estas son las empresas de mayor valuacion en nuestro sistema:")
         getMostValuedStocks(10)
@@ -475,6 +452,14 @@ def findStock(mode):
         else: 
             performSearch(userQuery)
     
+def quitProgram():
+    print("Esta Seguro de salir? Escriba Y para confirmar")
+    userInput =input()
+    if userInput.lower() == 'y':
+        fileHandler('close')
+        return True
+    else:
+        return False
     
 def startMenu():
     print("""
@@ -498,19 +483,21 @@ def startMenu():
         print("|" + "=" * 3 + "|" + "=" * 20 + "|" )
         print(" 2.  Analisis Múltiple con Indices")
         print("|" + "=" * 3 + "|" + "=" * 20 + "|" )
-        print(" 3.  Salir ")
-
-        selectedOption = input()
-        print("\n\n")
-        if selectedOption == '1':
-            findStock('single')    
-        elif selectedOption == '2':
-            findStock('multiple')    
-        elif selectedOption == '3':
-            break
-        else:  
-            print(f"El valor {selectedOption} no es válido")
-            
-    
+        print(" 3.  Salir \n")
+        try:
+            selectedOption = input()
+            print("\n\n")
+            if selectedOption == '1':
+                findStock('single')    
+            elif selectedOption == '2':
+                findStock('multiple')    
+            elif selectedOption == '3':
+                if quitProgram(): 
+                    break
+            else:  
+                print(f"El valor {selectedOption} no es válido")
+        except KeyboardInterrupt:
+            if quitProgram(): 
+                break
 
 startMenu()
